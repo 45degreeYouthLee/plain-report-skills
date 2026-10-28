@@ -2,7 +2,7 @@
 
 核心原则：**简单指语言简单，不指内容变少。** 改写后可以比原文长。
 
-来源：plain-chinese 的 15 条规则全收，加上读者要求的扫读规则，和 visual-explainer 的数字排版规则。
+来源：plain-chinese 的 15 条规则全收，加上用户要求的扫读规则，和 visual-explainer 的数字排版规则。
 
 ## 扫读
 
