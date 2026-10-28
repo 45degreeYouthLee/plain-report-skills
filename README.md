@@ -1,4 +1,4 @@
-# report-skills
+# plain-report-skills
 
 **一句话：** 装上以后，AI agent（Claude Code、Codex 等）给你汇报工作时，会先说结论、用大白话、把阻塞和要你拍板的事讲清楚；内容多时，自动做成一个排版统一、手机上也能看的单文件网页。
 
@@ -82,9 +82,9 @@ skills/
 **Codex 等读 `AGENTS.md` 的 agent：** 把本仓库克隆到项目旁边，在项目的 `AGENTS.md` 里写：
 
 ```markdown
-给我汇报、讲解或请我拍板时，先读 `../report-skills/skills/report-explain/SKILL.md`，
+给我汇报、讲解或请我拍板时，先读 `../plain-report-skills/skills/report-explain/SKILL.md`，
 再按它第一张表只读需要的 references 文件。出 HTML 页面时再读
-`../report-skills/skills/report-page-style/SKILL.md`，从它的模板开始。
+`../plain-report-skills/skills/report-page-style/SKILL.md`，从它的模板开始。
 ```
 
 **生成单文件网页：**
