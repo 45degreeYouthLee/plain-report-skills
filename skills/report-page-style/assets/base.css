@@ -4,7 +4,7 @@
 :root{
   --bg:#f6f6f2; --surface:#ffffff; --ink:#1b2126; --muted:#5f6a70; --line:#dcdfd8;
   --accent:#2c5f7c; --accent-soft:#e2edf2; --warn:#b5651d; --warn-soft:#f7e8d8;
-  --ok:#3d6b34; --ok-soft:#e6efe3; --off:#9aa3a8; --off-soft:#eceeea;
+  --ok:#3d6b34; --ok-soft:#e6efe3; --risk:#b03a2e; --risk-soft:#f8e4e1; --off:#9aa3a8; --off-soft:#eceeea;
   --display:"Noto Serif SC","Songti SC",serif;
   --body:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
@@ -12,11 +12,11 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#14181b; --surface:#1c2226; --ink:#e4e8ea; --muted:#9aa6ad; --line:#323b41;
   --accent:#7fb7d4; --accent-soft:#1e3442; --warn:#e3a062; --warn-soft:#3a2a1a;
-  --ok:#8fca85; --ok-soft:#1f3320; --off:#6f7a80; --off-soft:#262d31; color-scheme:dark}}
+  --ok:#8fca85; --ok-soft:#1f3320; --risk:#f08a7e; --risk-soft:#3d1c18; --off:#6f7a80; --off-soft:#262d31; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#14181b; --surface:#1c2226; --ink:#e4e8ea; --muted:#9aa6ad; --line:#323b41;
   --accent:#7fb7d4; --accent-soft:#1e3442; --warn:#e3a062; --warn-soft:#3a2a1a;
-  --ok:#8fca85; --ok-soft:#1f3320; --off:#6f7a80; --off-soft:#262d31; color-scheme:dark}
+  --ok:#8fca85; --ok-soft:#1f3320; --risk:#f08a7e; --risk-soft:#3d1c18; --off:#6f7a80; --off-soft:#262d31; color-scheme:dark}
 
 /* 版式 */
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.7;margin:0}
@@ -50,6 +50,12 @@ ul.keys{margin:0;padding-left:1.1em} ul.keys li{margin:4px 0}
 .st-block{background:var(--warn);color:var(--surface)}
 .st-todo{border:1px solid var(--off);color:var(--muted)}
 .st-cancel{color:var(--off);text-decoration:line-through}
+
+/* 改动前后：新增实线绿，删除虚线红加删除线，阻断红加 ✕ */
+.is-add{border:1.5px solid var(--ok)!important;background:var(--ok-soft)!important}
+.is-del{border:1.5px dashed var(--risk)!important;background:transparent!important;text-decoration:line-through;color:var(--muted)}
+.is-blocked{border:1.5px solid var(--risk)!important;background:var(--risk-soft)!important}
+.is-blocked::after{content:" ✕";color:var(--risk);font-weight:700}
 
 /* 保留 / 改写 / 丢弃 三栏 */
 .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:start}
@@ -107,6 +113,9 @@ td.r{text-align:right;font-variant-numeric:tabular-nums}
 .stepper button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer}
 .stepper .pos{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 .stepper .cap{margin-top:8px;font-size:14px;min-height:1.7em}
+.stepper .caps{margin:10px 0 0;padding-left:1.3em;font-size:13.5px}
+.stepper.js .caps{display:none}
+@media print{.stepper.js .caps{display:block}.stepper .ctl,.stepper .cap{display:none}.stepper .stage [data-s].off{opacity:1}}
 @media (prefers-reduced-motion:reduce){.stepper .stage [data-s]{transition:none}}
 
 /* 决策卡 */
