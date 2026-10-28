@@ -1,70 +1,102 @@
 # report-skills
 
-让 AI agent 写出一眼能看懂的汇报：先结论后细节的中文写法、选格式和画图规则、统一的 HTML 页面样式与组件。
+**一句话：** 装上以后，AI agent（Claude Code、Codex 等）给你汇报工作时，会先说结论、用大白话、把阻塞和要你拍板的事讲清楚；内容多时，自动做成一个排版统一、手机上也能看的单文件网页。
 
-## 两个 skill
+## 它能干什么
 
-| skill | 管什么 | 什么时候触发 |
-|---|---|---|
-| `report-explain` | **讲什么、怎么讲：** 选格式、扫读版简明中文、汇报格式（进度、阻塞、决策、事故、验收）、画图规则、页面结构、结尾的决策和核对项 | agent 要汇报、讲解、做对比、请人拍板时 |
-| `report-page-style` | **长什么样：** 共用样式（深浅两套主题）、13 种组件的模板、分步播放脚本、内联成单文件的工具 | `report-explain` 决定要出 HTML 页面后 |
+| 你说 | agent 会交出什么 |
+|---|---|
+| "汇报一下进度" | **进度汇报：** 第一句是整体结论；各模块用 6 个固定状态标注（已完成、进行中、有风险、卡住、未开始、取消），已完成的附证据（提交号、测试结果、文件路径）；只写本次变化；最后是下一步 |
+| "为什么卡住了" | **阻塞说明：** 必须写清四件事——卡在哪、试过什么、原因判断（实测、推断还是未知）、需要谁做什么。缺一件不算阻塞，agent 要继续自己解决 |
+| "这事你帮我定一下" / "A 和 B 选哪个" | **决策卡：** 每个选项写做法、牵连、成本、风险；给出推荐和大致把握（如"约七成"）；写明推荐依赖哪个假设、假设不成立改选哪个；最后告诉你回什么就行（如"回 A"） |
+| "讲讲这个架构" / "画个图" | **图：** 先判断画不画——文字一句能说清的不画；要画就按内容选图：流程图（从上到下）、分层图、架构图（线型和形状有固定含义）、时序图、并排小图、数字条 |
+| "出事了，复盘一下" | **复盘：** 结论 → 精确到分钟的时间线 → 根因 → 做对的 → 做错的 → 按优先级排的后续动作 |
+| "我想自己试试这个功能" | **验收清单：** 按你真实会做的操作流程分组，每步写做什么、应该看到什么、看到别的说明什么问题；你勾选结果后复制发回 |
+| "看不懂" / "说人话" / "大白话" | **改写：** 一句一件事、句首加粗关键词、删掉"值得注意的是"这类废话；数字、条件、"通常""可能"一个不删 |
 
-## 结构
+每次结尾都有两样东西：**需要你决定**（没有就不写）和**要核对**（1–3 件你应该自己验证的事）。
+
+## 交付形式怎么选
+
+agent 按"够用的最低一级"选：
+
+| 情况 | 交付 |
+|---|---|
+| 问答、单个事实、单个简单决定 | 聊天里一段文字 |
+| 有交叉关系、分支、对比 | 文字加一张图或一张表 |
+| 你要反复看、要转发、超过一屏、或要你拍板 | 单文件 HTML 网页，存到 `_reports/`，聊天里只给结论和路径 |
+
+网页用 `report-page-style` 的统一样式：暖灰底、单一蓝绿强调色、深浅两套主题、手机上不出现左右滚动条。提供 13 种组件：状态标签、分层图、流程图、数字条、卡片、保留/改写/丢弃三栏、对比表、决策卡、要核对、页脚，以及分步播放（扩展项）。
+
+**分步播放**只用在静态图讲不清的过程上，比如一个请求依次经过哪些组件、状态机怎么一步步变化。打开时显示完整的图，点了才逐步演示，从不自动播放。
+
+## 不做什么
+
+- **不替你做决定。** 要拍板的事只给选项、推荐和把握，决定权在你。
+- **不保证内容正确。** 它让汇报好懂，不验证事实；所以每次结尾列"要核对"。
+- **不做视频、幻灯片、动画装饰。** 动画只有"分步播放"一种，而且默认不用。
+- **不做交互式表单回传。** 页面上勾选的结果靠你复制粘贴发回。
+- **不做数据分析和抓取。** 它规定怎么呈现，不负责去拿数据。
+- **不用下拉框、标签页把信息藏起来。** 交互只用来高亮和筛选。
+
+## 适用范围
+
+- **语言：** 规则按中文汇报设计。英文也能用文字结构部分，但写法规则针对中文。
+- **读者：** 规则里把读者称为"GG"（本仓库作者）。给别人用时，把 `GG` 全局替换成读者的称呼即可，规则本身不依赖这个名字。
+- **agent：** Claude Code 能自动识别；Codex 等读 `AGENTS.md` 的 agent 需要在 `AGENTS.md` 里写一句"去读哪个文件"（见下面的安装）。
+- **依赖：** 出网页时，`inline.mjs` 需要 Node.js 18 或更高版本；没有 Node 可以手动把样式和脚本粘进页面。字体从 Google Fonts 加载，离线时退回系统字体。
+
+## 两个 skill 的分工
+
+| skill | 管什么 |
+|---|---|
+| `report-explain` | **讲什么、怎么讲：** 选交付形式、中文写法、汇报格式、画图规则、页面结构、结尾 |
+| `report-page-style` | **长什么样：** 样式、组件模板、分步播放脚本、内联成单文件的工具 |
 
 ```
 skills/
 ├── report-explain/
-│   ├── SKILL.md              核心规则，触发后必读
-│   └── references/           按需读取，用到哪份读哪份
-│       ├── writing.md        中文写法
-│       ├── reports.md        汇报类型
-│       ├── figures.md        画图
-│       ├── motion.md         动画（扩展项，不默认）
-│       ├── pages.md          页面结构与布局
+│   ├── SKILL.md              核心规则，触发后必读（约 1.3 千 token）
+│   └── references/           按需读取，单份 0.7–1.4 千 token
+│       ├── writing.md        中文写法：plain-chinese 15 条 + 扫读规则
+│       ├── reports.md        汇报类型：状态词汇、进度、阻塞、复盘、决策、验收清单
+│       ├── figures.md        画图：什么内容配什么图、架构图约定、图表细则
+│       ├── motion.md         分步播放和回放（扩展项）
+│       ├── pages.md          8 种页面结构、布局判断、时间线、密钥脱敏
 │       └── sources.md        每条规则的来源和取舍（维护时读）
 └── report-page-style/
-    ├── SKILL.md              用法、视觉规则、组件速查
+    ├── SKILL.md              用法、视觉规则、组件速查（约 1 千 token）
     └── assets/
-        ├── template.src.html 组件模板
-        ├── base.css          共用样式（由工具嵌入，不进上下文）
-        ├── stepper.js        分步播放（同上）
+        ├── template.src.html 组件模板（约 1.7 千 token）
+        ├── base.css          共用样式（由工具嵌入，不进 agent 上下文）
+        ├── stepper.js        分步播放脚本（同上）
         └── inline.mjs        把样式和脚本嵌成单文件 HTML
 ```
 
+每个会话常驻的只有两个 skill 的描述，合计约 280 token；其余内容用到才读。
+
 ## 安装
 
-**Claude Code：** 把 `skills/` 下的两个目录复制到项目的 `.claude/skills/`，或个人目录 `~/.claude/skills/`。会话开始时自动识别，也可以输入 `/report-explain` 手动触发。
+**Claude Code：** 把 `skills/` 下的两个目录复制到项目的 `.claude/skills/`，或个人目录 `~/.claude/skills/`。也可以输入 `/report-explain` 手动触发。
 
-**Codex 和其他读 `AGENTS.md` 的 agent：** 把两个目录放进项目，在项目根目录的 `AGENTS.md` 里写：
+**Codex 等读 `AGENTS.md` 的 agent：** 把本仓库克隆到项目旁边，在项目的 `AGENTS.md` 里写：
 
 ```markdown
-给人汇报、讲解或请人拍板时，先读 `<路径>/report-explain/SKILL.md`，再按它第一张表只读需要的 references 文件。
-出 HTML 页面时再读 `<路径>/report-page-style/SKILL.md`，从它的模板开始。交付前过一遍核心规则的自检。
+给我汇报、讲解或请我拍板时，先读 `../report-skills/skills/report-explain/SKILL.md`，
+再按它第一张表只读需要的 references 文件。出 HTML 页面时再读
+`../report-skills/skills/report-page-style/SKILL.md`，从它的模板开始。
 ```
 
-**内联工具需要 Node.js 18 或更高版本：**
+**生成单文件网页：**
 
 ```bash
 node skills/report-page-style/assets/inline.mjs _reports/页面.src.html
 ```
 
-## 大小
-
-数字是估算的 token 数（中文约 1 字 1 个，其他约 4 字符 1 个）。
-
-| 部分 | 何时加载 | 约 |
-|---|---|---|
-| 两个 skill 的描述 | 每个会话都加载 | 280 |
-| `report-explain` 核心 | 触发时 | 1,300 |
-| `report-explain` 全部细则 | 按需，单份 700–1,400 | 6,900 |
-| `report-page-style` 说明 | 出页面时 | 1,000 |
-| 模板 | 出页面时 | 1,700 |
-| 样式、脚本、工具 | 不进上下文 | 0 |
-
 ## 来源
 
 规则整合自以下 MIT 许可的项目，并按实际使用反馈改写。每条规则的出处和取舍记录在 `skills/report-explain/references/sources.md`。
 
-- [understanding-ladder](https://github.com/ChangWenC/understanding-ladder)（含 plain-chinese）
-- [visual-explainer](https://github.com/nicobailon/visual-explainer) 0.14.0
-- [agent-html-skills](https://github.com/f-labs-io/agent-html-skills) 1.4.0
+- [understanding-ladder](https://github.com/ChangWenC/understanding-ladder)（含 plain-chinese）：选交付形式、中文写法
+- [visual-explainer](https://github.com/nicobailon/visual-explainer) 0.14.0：图和页面的画法、分步播放
+- [agent-html-skills](https://github.com/f-labs-io/agent-html-skills) 1.4.0：汇报、时间线、对比、架构图、验收清单的结构
