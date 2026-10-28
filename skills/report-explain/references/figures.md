@@ -1,6 +1,6 @@
 # 图
 
-来源：understanding-ladder 的画图规则；visual-explainer 的 SKILL.md、diagrams.md、style-guide.md；agent-html-skills 的架构图和 SVG 图 skill；GG 的反馈。
+来源：understanding-ladder 的画图规则；visual-explainer 的 SKILL.md、diagrams.md、style-guide.md；agent-html-skills 的架构图和 SVG 图 skill；读者的反馈。
 
 ## 先问：画不画
 

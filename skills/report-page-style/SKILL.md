@@ -1,11 +1,11 @@
 ---
 name: report-page-style
-description: 给 GG 出 HTML 页面时的统一样式和组件：暖灰纸底、单一蓝绿强调色、宋体标题黑体正文、深浅两套主题；提供状态标签、分层图、从上到下的流程图、数字条、卡片、保留改写丢弃三栏、对比表、决策卡、要核对、分步播放等组件和模板。按 report-explain 决定要出页面后使用。
+description: 给读者出 HTML 页面时的统一样式和组件：暖灰纸底、单一蓝绿强调色、宋体标题黑体正文、深浅两套主题；提供状态标签、分层图、从上到下的流程图、数字条、卡片、保留改写丢弃三栏、对比表、决策卡、要核对、分步播放等组件和模板。按 report-explain 决定要出页面后使用。
 ---
 
-# GG 页面样式
+# 汇报页面样式
 
-内容怎么组织看 `report-explain`；本 skill 只管"长什么样"。目标是每个页面都长得像同一套，GG 不用每次重新适应。
+内容怎么组织看 `report-explain`；本 skill 只管"长什么样"。目标是每个页面都长得像同一套，读者不用每次重新适应。
 
 ## 用法
 
@@ -38,7 +38,7 @@ description: 给 GG 出 HTML 页面时的统一样式和组件：暖灰纸底、
 | 各做各事的对象 | 卡片 | `.grid2/.grid3 > .card`，不要的用 `.card.drop` |
 | 取舍 | 三栏 | `.cols3 > .col.keep / .col.change / .col.drop` |
 | 同一组维度的对比 | 表格 | `.tbl > table`，等级用 `.lv.lo/.mid/.hi` |
-| 请 GG 拍板 | 决策卡 | `.decide > .opts > .opt`，推荐 `.opt.rec`，不可选 `.opt.no`，翻转条件 `.flip` |
+| 请读者拍板 | 决策卡 | `.decide > .opts > .opt`，推荐 `.opt.rec`，不可选 `.opt.no`，翻转条件 `.flip` |
 | 要核对 | 核对清单 | `.check` |
 | 静态图讲不清的过程 | 分步播放（扩展项） | `figure.stepper`，元素加 `data-s="N"`、`data-hot="N"`，说明写在 `ol.caps` |
 | 更新时间和来源 | 页脚 | `footer` |

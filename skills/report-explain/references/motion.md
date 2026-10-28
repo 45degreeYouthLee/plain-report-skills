@@ -1,6 +1,6 @@
 # 动画（扩展项，不默认）
 
-来源：visual-explainer 的 motion.md（分步播放、回放），按 GG 的要求改成扩展项。
+来源：visual-explainer 的 motion.md（分步播放、回放），按读者的要求改成扩展项。
 
 ## 什么时候用
 

@@ -2,7 +2,7 @@
 
 页面的样式、组件和模板在 `report-page-style` 里；本文件只管页面的内容结构和布局判断。
 
-来源：visual-explainer 的 SKILL.md 和 style-guide.md；agent-html-skills 的研究报告、时间线、架构图 skill 和它们共用的"HTML 输出基础"；GG 的反馈。
+来源：visual-explainer 的 SKILL.md 和 style-guide.md；agent-html-skills 的研究报告、时间线、架构图 skill 和它们共用的"HTML 输出基础"；读者的反馈。
 
 ## 结构
 
@@ -46,7 +46,7 @@
 页面会被转发，按"会离开本机"处理：
 
 - **引用代码、配置、日志、命令输出前，** 把密钥、令牌、密码、带签名的链接换成 `<REDACTED:类型>`。
-- **发现真实密钥时，** 页面里替换掉，同时告诉 GG 去更换它。
+- **发现真实密钥时，** 页面里替换掉，同时告诉读者去更换它。
 - **页面里不嵌入用户数据、本机证据目录的绝对路径。**
 - **把引用内容插进页面时用 `textContent`，** 不用 `innerHTML` 拼接变量。
 
