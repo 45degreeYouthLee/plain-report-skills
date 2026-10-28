@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>页面名称（两到四个词）</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap">
+<link rel="stylesheet" data-inline href="base.css">
+<style>/* 本页额外样式写这里，只用 base.css 的变量 */</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- 组件示例：保留要用的，删掉其余。所有文字都是示例。 -->
+  <span class="eyebrow">页面类型 · 示例</span>
+  <h1>标题写结论，不写话题</h1>
+  <p class="lead"><b>结论：</b>一句话说清整体情况。</p>
+
+  <h2>全景：分层图</h2>
+  <div class="layers">
+    <section class="layer"><div><b>第 2 层 接口</b><p class="sm">Agent 怎么调用</p></div>
+      <div class="tiles"><div class="tile"><b>MCP 工具</b> <span class="pill st-done">已完成</span></div><div class="tile new"><b>调试工具</b> <span class="pill st-todo">未开始</span></div></div></section>
+    <section class="layer"><div><b>第 1 层 内核</b><p class="sm">微软提供</p></div>
+      <div class="tiles"><div class="tile"><b>WebView2</b> <span class="pill st-risk">有风险</span></div></div></section>
+  </div>
+
+  <h2>状态标签</h2>
+  <p><span class="pill st-done">已完成</span> <span class="pill st-doing">进行中</span> <span class="pill st-risk">有风险</span> <span class="pill st-block">卡住</span> <span class="pill st-todo">未开始</span> <span class="pill st-cancel">取消</span></p>
+
+  <h2>数字条</h2>
+  <div class="panel bars">
+    <div class="bar-row"><div><b>回归测试</b><p class="sm">305 项</p></div><div class="bar"><span class="seg-a" style="flex:305">通过 305</span></div></div>
+    <div class="bar-row"><div><b>示例拆分</b><p class="sm">14 条</p></div><div class="bar"><span class="seg-a" style="flex:8">保留 8</span><span class="seg-b" style="flex:3">改 3</span><span class="seg-c" style="flex:3">丢 3</span></div></div>
+  </div>
+
+  <h2>流程图（从上到下）</h2>
+  <div class="panel flow">
+    <div class="row"><div class="node plain">输入</div></div>
+    <div class="arr"></div>
+    <div class="row"><div class="node">处理步骤<small>一句说明</small></div><div class="notes"><div class="note"><b>注意</b> → 旁注和所指节点同一行</div></div></div>
+    <div class="arr"><span>条件成立时</span></div>
+    <div class="row"><div class="node off">可选步骤</div></div>
+  </div>
+
+  <h2>一个对象一张卡片</h2>
+  <div class="grid2">
+    <article class="card"><h3>对象 A</h3><p class="sm">一行定位</p><ul class="keys"><li><b>关键词：</b>解释</li><li><b>关键词：</b>解释</li></ul></article>
+    <article class="card drop"><h3>对象 B（不要）</h3><ul class="keys"><li><b>原因：</b>解释</li></ul></article>
+  </div>
+
+  <h2>保留 / 改写 / 丢弃</h2>
+  <div class="cols3">
+    <div class="col keep"><h4>保留</h4><ul><li><b>规则：</b>说明</li></ul></div>
+    <div class="col change"><h4>改写</h4><ul><li><b>原来 → 现在：</b><em>原因</em></li></ul></div>
+    <div class="col drop"><h4>丢弃</h4><ul><li><b>规则：</b><em>原因</em></li></ul></div>
+  </div>
+
+  <h2>对比表（只在比同一组维度时用）</h2>
+  <div class="tbl"><table><thead><tr><th>方案</th><th>成本</th><th>风险</th><th>理由</th></tr></thead>
+    <tbody><tr><td>A</td><td><span class="lv lo">低</span></td><td><span class="lv mid">中</span></td><td>每格写理由，不只写分数</td></tr></tbody></table></div>
+
+  <h2>分步播放（扩展项）</h2>
+  <figure class="panel stepper">
+    <div class="stage flow">
+      <div class="row" data-s="1"><div class="node plain">请求进入</div></div>
+      <div class="arr" data-s="2"></div>
+      <div class="row" data-s="2" data-hot="2"><div class="node">查缓存<small>未命中</small></div></div>
+      <div class="arr" data-s="3"><span>未命中时</span></div>
+      <div class="row" data-s="3" data-hot="3"><div class="node">查数据库</div></div>
+    </div>
+    <ol class="caps" hidden><li>请求进入服务。</li><li>先查缓存：TTL 已过期，未命中（示例）。</li><li>回源查数据库，再写回缓存。</li></ol>
+    <div class="ctl"></div>
+    <p class="cap"></p>
+    <figcaption class="sm">打开时停在最后一步，即完整的图；点"从头播放"逐步演示。</figcaption>
+  </figure>
+
+  <h2>收尾</h2>
+  <section class="decide">
+    <div class="q"><span class="eyebrow">需要你决定</span><h3>问题本身，一句话</h3><p>不定会卡住什么。</p></div>
+    <div class="opts">
+      <article class="opt rec"><div class="oh"><span class="key">A</span><b>选项名</b><span class="badge">推荐 · 约七成把握（估计）</span></div>
+        <dl><dt>做法</dt><dd>具体怎么做</dd><dt>牵连</dt><dd>依赖什么、解锁或卡住什么</dd><dt>成本</dt><dd><span class="lv lo">低</span> 时间、费用、人力</dd><dt>风险</dt><dd><span class="lv mid">中</span> 最坏情况</dd></dl>
+        <p class="flip"><b>翻转条件：</b>如果某假设不成立，改选 B。</p></article>
+      <article class="opt"><div class="oh"><span class="key">B</span><b>选项名</b></div>
+        <dl><dt>做法</dt><dd>…</dd><dt>牵连</dt><dd>…</dd><dt>成本</dt><dd><span class="lv mid">中</span></dd><dt>风险</dt><dd><span class="lv lo">低</span></dd></dl></article>
+      <article class="opt no"><div class="oh"><span class="key">C</span><b>选项名</b><span class="pill st-cancel">不可选</span></div>
+        <dl><dt>原因</dt><dd>不满足哪个必须条件</dd></dl></article>
+    </div>
+    <p>回复 <b>A</b> 或 <b>B</b> 即可。</p>
+  </section>
+  <section class="check"><span class="eyebrow">要核对</span><ul><li><b>关键数字：</b>来源位置</li></ul></section>
+
+  <footer>更新：YYYY-MM-DD HH:MM · 依据：文件、提交、日志位置</footer>
+</div>
+<script data-inline src="stepper.js"></script>
+</body>
+</html>
