@@ -100,3 +100,7 @@ node skills/report-page-style/assets/inline.mjs _reports/页面.src.html
 - [understanding-ladder](https://github.com/ChangWenC/understanding-ladder)（含 plain-chinese）：选交付形式、中文写法
 - [visual-explainer](https://github.com/nicobailon/visual-explainer) 0.14.0：图和页面的画法、分步播放
 - [agent-html-skills](https://github.com/f-labs-io/agent-html-skills) 1.4.0：汇报、时间线、对比、架构图、验收清单的结构
+
+## 许可证
+
+MIT，见 [LICENSE](LICENSE)。
