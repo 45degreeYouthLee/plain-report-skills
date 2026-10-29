@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__TITLE__</title>
+<link rel="stylesheet" data-inline href="base.css">
+<link rel="stylesheet" data-inline href="handoff.css">
+</head>
+<body>
+<main class="wrap" id="handoff-root" data-versions="__COUNT__">
+  <div class="top"><p class="eyebrow">项目交接 · 更新到 __UPDATED__</p><button type="button" id="theme">切换深浅</button></div>
+  <h1>__TITLE__</h1>
+  <p class="lead">__GOAL__</p>
+  <nav id="timeline" class="timeline" role="tablist" aria-label="历史轮次">__TIMELINE__</nav>
+  <div class="controls"><button type="button" id="previous">← 上一轮</button><button type="button" id="next">下一轮 →</button><span id="position" role="status" aria-live="polite"></span><span class="legend"><i class="dot product"></i>产品有新证据 <i class="dot support"></i>只涉及支撑工作</span></div>
+  <div id="handoff-panel" role="tabpanel" aria-label="所选轮次">__INITIAL__</div>
+  __TEMPLATES__
+</main>
+<script data-inline src="handoff.js"></script>
+</body>
+</html>

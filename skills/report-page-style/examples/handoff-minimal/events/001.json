@@ -1,0 +1,14 @@
+{
+  "version": 1, "at": "2026-11-02 10:00", "clock": "11-02", "type": "进展", "topic": "样例跑通",
+  "title": "样例发票能读出金额和日期，真实发票还没测",
+  "sources": [{"id": "s1", "title": "执行者汇报：样例测试", "kind": "执行者汇报", "at": "2026-11-02 10:00", "excerpt": "20 张样例中 19 张金额正确。"}],
+  "changes": {
+    "phases": [{"id": "read", "status": "进行中", "summary": "20 张样例发票里 19 张金额读对。", "refs": ["s1"]}],
+    "tasks": [
+      {"id": "accuracy", "title": "用真实发票测准确率", "status": "未开始", "track": "product", "summary": "还没有真实发票样本。", "impact": "没有这个数字，就无法判断能否交给财务试用。", "refs": ["s1"],
+       "action": {"task": "向财务要 100 张脱敏的真实发票", "output": "样本文件夹和清单", "done": "100 张样本到位且已脱敏", "owner": null, "role": "项目负责人", "priority": 1, "unblocks": "准确率测试"}},
+      {"id": "deploy", "title": "准备测试服务器", "status": "进行中", "track": "support", "summary": "部署脚本写了一半。", "impact": "服务器到位后财务同事才能试用。", "refs": ["s1"],
+       "action": {"task": "完成部署脚本并在测试机跑一次", "output": "可访问的测试地址", "done": "测试地址能上传一张发票并返回结果", "owner": "执行助手", "priority": 2}}
+    ]
+  }
+}
