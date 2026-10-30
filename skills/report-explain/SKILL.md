@@ -19,6 +19,7 @@ description: 任何 agent（Codex、Claude 等）给用户汇报、讲解或请�
 | 写任何中文段落（几乎每次） | `references/writing.md` |
 | 写进度汇报、阻塞、事故、决策请求 | `references/reports.md` |
 | 同一项目跨多轮、多次会话持续汇报或交接（看板、交接页） | `references/handoffs.md`，页面用 `report-page-style` 的交接构建器 |
+| 项目整体全貌、架构、阶段、历史节点（不是某一轮任务） | 改用 `project-tracking` 技能 |
 | 画图 | `references/figures.md` |
 | 讲状态机、队列、请求路径、架构演进，且静态图讲不清 | `references/motion.md`（扩展项，不默认） |
 | 出 HTML 页面 | `references/pages.md`，并调用 `report-page-style` 取样式和模板 |

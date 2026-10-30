@@ -20,6 +20,7 @@ node <本 skill 目录>/scripts/build-handoff.mjs <项目目录>/project.json _r
 | `phases`、`tasks`、`decisions`、`userActions` | 否 | 开始前已知的对象，格式同下 |
 | `sources` | 否 | 背景资料来源 |
 | `boundary` | 否 | 整页通用的边界说明，只在来源区出现一次 |
+| `tracking` | 否 | 项目追踪页（project-tracking 技能生成）的相对链接，显示在页头 |
 
 ## 事件
 

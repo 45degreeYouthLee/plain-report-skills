@@ -33,10 +33,11 @@ const timeline = history.map(s => `<button type="button" role="tab" data-version
 const values = {
   TITLE: e(project.title), GOAL: e(project.goal), COUNT: String(history.length), TIMELINE: timeline,
   UPDATED: e(last.event.at),
+  TRACKING: project.tracking ? ` · <a href="${e(project.tracking)}">项目追踪（架构与全貌）</a>` : '',
   INITIAL: renderSnapshot(project, last, {latest: true}),
   TEMPLATES: history.map(s => `<template id="handoff-v${s.version}">${renderSnapshot(project, s, {latest: s === last})}</template>`).join('')
 };
-const template = (await readFile(join(assets, 'handoff-template.src.html'), 'utf8')).replace(/__(TITLE|GOAL|COUNT|TIMELINE|UPDATED|INITIAL|TEMPLATES)__/g, (_, k) => values[k]);
+const template = (await readFile(join(assets, 'handoff-template.src.html'), 'utf8')).replace(/__(TITLE|GOAL|COUNT|TIMELINE|UPDATED|TRACKING|INITIAL|TEMPLATES)__/g, (_, k) => values[k]);
 const src = destination.replace(/\.html$/, '.src.html');
 await writeFile(src, template);
 execFileSync(process.execPath, [join(assets, 'inline.mjs'), src, destination], {stdio: 'ignore'});

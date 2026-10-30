@@ -1,0 +1,44 @@
+{
+  "title": "发票识别服务追踪",
+  "goal": "让财务同事上传发票照片后，自动填好报销单，并标出需要人工确认的字段。",
+  "nonGoals": ["不做报销审批流程", "不保存发票原图超过 30 天"],
+  "updatedAt": "2026-11-04",
+  "summary": "读取和填单两块已建成，真实发票准确率 82%，低于试用门槛 95%；正在等你选提升方案。确认界面还没开始，视觉规范由你主导，已定下第一批。",
+  "architecture": {
+    "overview": "三块配合：网页前端收照片、后端服务调用识别引擎读出文字、再按规则填进报销单。识别引擎是外部组件；发票数据只存在公司内网的数据库里。",
+    "layers": [
+      {"id": "ui", "title": "界面层", "role": "财务同事看到的", "modules": [
+        {"id": "web", "title": "上传与确认页面", "role": "上传照片，查看并修改识别结果", "status": "未开始", "paths": ["web"], "proof": {"level": "未知", "text": "还没开始做"}}
+      ]},
+      {"id": "core", "title": "服务层", "role": "主要逻辑", "modules": [
+        {"id": "reader", "title": "读取", "role": "调用识别引擎，把照片里的金额、日期、抬头读出来", "status": "已完成", "paths": ["server/reader"], "proof": {"level": "部分验证", "text": "100 张真实发票金额准确率 82%", "at": "2026-11-04", "refs": ["test"]}},
+        {"id": "filler", "title": "填单", "role": "把读出的字段按规则填进报销单，没把握的字段做标记", "status": "已完成", "paths": ["server/filler"], "proof": {"level": "已验证", "text": "规则单元测试 42/42", "at": "2026-11-02", "refs": ["test"]}}
+      ]},
+      {"id": "base", "title": "底座", "role": "依赖的外部组件和数据", "modules": [
+        {"id": "ocr", "title": "开源识别引擎", "role": "把图片转成文字", "status": "已完成", "external": true, "proof": {"level": "部分验证", "text": "手写和褶皱发票错误多", "at": "2026-11-04", "refs": ["test"]}, "risk": "手写识别弱"},
+        {"id": "db", "title": "发票数据库", "role": "保存识别结果和人工修改记录", "status": "进行中", "paths": ["server/db"], "proof": {"level": "未验证", "text": "表结构已建，未做数据保留测试"}}
+      ]}
+    ],
+    "flows": [{"title": "一张发票从上传到填好", "steps": ["财务同事上传照片", "服务调用识别引擎读出文字", "按规则填进报销单", "没把握的字段标黄，交给人确认", "确认后保存"]}],
+    "rules": [
+      {"id": "intranet", "rule": "发票照片和识别结果不离开公司内网", "why": "财务数据合规要求", "by": "用户", "at": "2026-11-01", "status": "遵守", "note": "当前引擎在本地运行"},
+      {"id": "no-auto", "rule": "没把握的字段必须交给人确认，不自动提交", "why": "错填金额的代价远高于多确认一次", "by": "用户", "at": "2026-11-01", "status": "未核对"}
+    ],
+    "decisions": [{"id": "engine", "title": "先用开源识别引擎", "decision": "本地部署，不用云服务", "reason": "满足内网规则，没有按张费用", "alternatives": "付费云识别服务", "by": "Codex", "date": "2026-11-01", "status": "有效", "revisit": "准确率达不到门槛时"}],
+    "stack": [{"name": "Python 3.12 + FastAPI", "use": "后端服务", "why": "识别引擎是 Python 的"}, {"name": "开源识别引擎", "use": "读取文字", "why": "可本地部署", "risk": "手写识别弱"}],
+    "risks": [{"title": "真实发票准确率不达标", "level": "高", "impact": "不能交给财务试用", "mitigation": "等你选提升方案"}]
+  },
+  "lines": [
+    {"id": "product", "title": "识别与填单", "lead": "Codex", "status": "有风险", "goal": "真实发票金额准确率达到 95%", "now": "82%，等你选提升方案", "reports": "handoff.html",
+     "artifacts": [{"title": "识别服务", "kind": "代码", "location": "server/", "status": "进行中"}, {"title": "准确率测试报告", "kind": "测试报告", "location": "docs/accuracy-1104.md", "status": "已完成", "at": "2026-11-04"}]},
+    {"id": "visual", "title": "视觉与交互", "lead": "用户", "status": "进行中", "goal": "确认页面让财务同事一眼看出要改哪几个字段", "now": "第一批规范已定，页面还没做",
+     "constraints": [{"rule": "需要确认的字段用浅黄底，不用红色", "source": "你的意见", "at": "2026-11-03"}, {"rule": "金额统一右对齐、等宽数字", "source": "你的意见", "at": "2026-11-03"}]}
+  ],
+  "forYou": [{"kind": "知晓", "title": "“不自动提交”规则还没核对", "detail": "确认页面没做之前，无法证明没把握的字段一定会交给人。", "line": "product"}],
+  "history": [
+    {"date": "2026-11-04", "kind": "问题", "line": "product", "title": "真实发票准确率 82%", "impact": "试用推迟到准确率达标之后。", "refs": ["test"], "link": "handoff.html#v2"},
+    {"date": "2026-11-03", "kind": "新增工作线", "line": "visual", "title": "你开始主导视觉与交互", "impact": "确认页面按你的规范做。"},
+    {"date": "2026-11-01", "kind": "决定", "title": "定下内网与人工确认两条规则", "impact": "排除了云识别服务。", "arch": true}
+  ],
+  "sources": [{"id": "test", "title": "准确率测试报告", "file": "docs/accuracy-1104.md", "at": "2026-11-04"}]
+}
