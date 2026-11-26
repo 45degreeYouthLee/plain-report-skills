@@ -87,7 +87,15 @@ skills/
 `../plain-report-skills/skills/report-page-style/SKILL.md`，从它的模板开始。
 ```
 
-**生成单文件网页：**
+## 生成单文件网页
+
+在仓库根目录运行以下命令，用自带模板生成示例。脚本会创建 `_reports/` 目录，完成后用浏览器打开 `_reports/示例.html`。
+
+```bash
+node skills/report-page-style/assets/inline.mjs skills/report-page-style/assets/template.src.html _reports/示例.html
+```
+
+制作自己的报告时，将 `skills/report-page-style/assets/template.src.html` 复制为 `_reports/页面.src.html`，编辑副本后运行以下命令。成品写入 `_reports/页面.html`。
 
 ```bash
 node skills/report-page-style/assets/inline.mjs _reports/页面.src.html
